@@ -1,4 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
+import '../models/app_config.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -11,22 +15,40 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    // Navigate after 1 second
-    Future.delayed(const Duration(seconds: 1), () {
+
+    Future.delayed(const Duration(seconds: 1), () async {
+      await setUp(); // load config
       if (!mounted) return;
-      Navigator.of(context).pushReplacementNamed('home');
+      Navigator.of(context).pushReplacementNamed('home'); // go to main
     });
+  }
+
+  Future<void> setUp() async {
+    final getIt = GetIt.instance;
+    final configFile = await rootBundle.loadString("assets/config/main.json");
+    final configData = json.decode(configFile);
+
+    getIt.registerSingleton<AppConfig>(
+      AppConfig(
+        BASE_API_URL: configData['BASE_API_URL'],
+        BASE_IMAGE_API_URL: configData['BASE_IMAGE_API_URL'],
+        API_KEY: configData["API_KEY"],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black, // ✅ Black background
+    return const Scaffold(
+      backgroundColor: Colors.black,
       body: Center(
         child: SizedBox(
           height: 200,
           width: 200,
-          child: Image.asset('assets/images/logo.png', fit: BoxFit.contain),
+          child: Image(
+            image: AssetImage('assets/images/logo.png'),
+            fit: BoxFit.contain,
+          ),
         ),
       ),
     );
