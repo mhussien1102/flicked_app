@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flicked_app/models/movie.dart';
 import 'package:flicked_app/models/search_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,7 +60,14 @@ class MainPage extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
-        children: [topBarWidget()],
+        children: [
+          topBarWidget(),
+          Container(
+            height: deviceHeight * 0.83,
+            padding: EdgeInsets.symmetric(vertical: deviceHeight * 0.01),
+            child: MoviesListViewWidget(),
+          ),
+        ],
       ),
     );
   }
@@ -133,5 +141,47 @@ class MainPage extends ConsumerWidget {
         ),
       ],
     );
+  }
+
+  Widget MoviesListViewWidget() {
+    final List<Movie> movie = [];
+
+    for (int i = 0; i < 20; i++) {
+      movie.add(
+        Movie(
+          name: 'War of the Worlds',
+          language: "EN",
+          isAdult: false,
+          description:
+              'Will Radford is a top analyst for Homeland Security who tracks potential threats through a mass surveillance program, until one day an attack by an unknown entity leads him to question whether the government is hiding something from him... and from the rest of the world.',
+          posterPath: '/yvirUYrva23IudARHn3mMGVxWqM.jpg',
+          rating: 8.3,
+          releaseDate: '7-4-2021',
+          backdropPath: "/kqHypb4MdEBUFiphf49bK99T4cn.jpg",
+        ),
+      );
+    }
+
+    if (movie.isNotEmpty) {
+      return ListView.builder(
+        itemCount: movie.length,
+        itemBuilder: (context, count) {
+          return Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: deviceHeight * 0.01,
+              horizontal: 0,
+            ),
+            child: GestureDetector(
+              onTap: () {},
+              child: Text(movie[count].name),
+            ),
+          );
+        },
+      );
+    } else {
+      return Center(
+        child: CircularProgressIndicator(backgroundColor: Colors.white),
+      );
+    }
   }
 }
