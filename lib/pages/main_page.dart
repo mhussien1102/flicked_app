@@ -20,6 +20,7 @@ class MainPage extends ConsumerWidget {
     deviceHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       body: SizedBox(
         width: deviceWidth,
@@ -57,9 +58,9 @@ class MainPage extends ConsumerWidget {
   Widget buildForeground() {
     return Container(
       padding: EdgeInsets.fromLTRB(0, deviceHeight * 0.02, 0, 0),
-      width: deviceHeight * 0.88,
+      width: deviceWidth * 0.88,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
