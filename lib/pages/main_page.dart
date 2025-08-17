@@ -4,6 +4,8 @@ import 'package:flicked_app/models/search_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../widgets/movie_tile.dart';
+
 class MainPage extends ConsumerWidget {
   MainPage({super.key});
 
@@ -173,7 +175,11 @@ class MainPage extends ConsumerWidget {
             ),
             child: GestureDetector(
               onTap: () {},
-              child: Text(movie[count].name),
+              child: MovieTile(
+                movie: movie[count],
+                height: deviceHeight * 0.20,
+                width: deviceWidth * 0.85,
+              ),
             ),
           );
         },
