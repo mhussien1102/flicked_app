@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flicked_app/models/search_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -74,7 +75,7 @@ class MainPage extends ConsumerWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [searchBarWidget()],
+        children: [searchBarWidget(), categorySelcetionWidget()],
       ),
     );
   }
@@ -98,6 +99,39 @@ class MainPage extends ConsumerWidget {
           fillColor: Colors.white24,
         ),
       ),
+    );
+  }
+
+  Widget categorySelcetionWidget() {
+    return DropdownButton(
+      icon: Icon(Icons.menu, color: Colors.white24),
+      dropdownColor: Colors.black38,
+      value: SearchCategory.popular,
+      underline: Container(height: 1, color: Colors.white24),
+      onChanged: (value) {},
+      items: [
+        DropdownMenuItem(
+          value: SearchCategory.popular,
+          child: Text(
+            SearchCategory.popular,
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        DropdownMenuItem(
+          value: SearchCategory.upComing,
+          child: Text(
+            SearchCategory.upComing,
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        DropdownMenuItem(
+          value: SearchCategory.none,
+          child: Text(
+            SearchCategory.none,
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ],
     );
   }
 }
