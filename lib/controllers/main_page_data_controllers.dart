@@ -17,6 +17,8 @@ class MainPageDataControllers extends StateNotifier<MainPageData> {
     try {
       List<Movie> movies = [];
       movies = await movieService.getPopularMovies(state.page);
-    } catch (e) {}
+    } catch (e) {
+      // print('object');
+    }
   }
 }
