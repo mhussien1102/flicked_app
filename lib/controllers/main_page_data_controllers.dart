@@ -1,5 +1,5 @@
-//Packages
-import 'dart:async';
+import 'package:flicked_app/models/main_page_data.dart';
+import 'package:flicked_app/services/movie_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 
