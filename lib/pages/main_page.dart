@@ -36,6 +36,8 @@ class MainPage extends ConsumerWidget {
 
   TextEditingController? _searchTextFieldController;
 
+  MainPage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _deviceHeight = MediaQuery.of(context).size.height;
@@ -56,7 +58,7 @@ class MainPage extends ConsumerWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
-      body: Container(
+      body: SizedBox(
         height: _deviceHeight,
         width: _deviceWidth,
         child: Stack(
@@ -132,7 +134,7 @@ class MainPage extends ConsumerWidget {
 
   Widget _searchFieldWidget() {
     final _border = InputBorder.none;
-    return Container(
+    return SizedBox(
       width: _deviceWidth! * 0.50,
       height: _deviceHeight! * 0.05,
       child: TextField(
@@ -166,25 +168,26 @@ class MainPage extends ConsumerWidget {
                   : null,
       items: [
         DropdownMenuItem(
+          value: SearchCategory.popular,
           child: Text(
             SearchCategory.popular,
             style: TextStyle(color: Colors.white),
           ),
-          value: SearchCategory.popular,
         ),
         DropdownMenuItem(
+          value: SearchCategory.upcoming,
           child: Text(
             SearchCategory.upcoming,
             style: TextStyle(color: Colors.white),
           ),
-          value: SearchCategory.upcoming,
         ),
+
         DropdownMenuItem(
+          value: SearchCategory.none,
           child: Text(
             SearchCategory.none,
             style: TextStyle(color: Colors.white),
           ),
-          value: SearchCategory.none,
         ),
       ],
     );
