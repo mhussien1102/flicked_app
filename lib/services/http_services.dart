@@ -1,35 +1,33 @@
+import '../models/app_config.dart';
+
+//Packages
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
-import '../models/app_config.dart';
-
-class HTTPServices {
+class HTTPService {
   final Dio dio = Dio();
-  final getIt = GetIt.instance;
+  final GetIt getIt = GetIt.instance;
 
-  late final String base_url;
-  late final String api_key;
+  String? _base_url;
+  String? _api_key;
 
-  HTTPServices()
-    : base_url = GetIt.instance.get<AppConfig>().BASE_API_URL,
-      api_key = GetIt.instance.get<AppConfig>().API_KEY;
+  HTTPService() {
+    AppConfig _config = getIt.get<AppConfig>();
+    _base_url = _config.BASE_API_URL;
+    _api_key = _config.API_KEY;
+  }
 
-  Future<Response?> get(String path, {Map<String, dynamic>? query}) async {
+  Future<Response?> get(String _path, {Map<String, dynamic>? query}) async {
     try {
-      String url = '$base_url$path';
-
-      // default query params
-      final params = {
-        'api_key': api_key,
-        'language': 'en-US',
-        ...?query, // spread extra query if provided
-      };
-
-      return await dio.get(url, queryParameters: params);
+      String _url = '$_base_url$_path';
+      Map<String, dynamic> _query = {'api_key': _api_key, 'language': 'en-US'};
+      if (query != null) {
+        _query.addAll(query);
+      }
+      return await dio.get(_url, queryParameters: _query);
     } on DioError catch (e) {
-      print("Unable to perform this request");
-      print("DioError: ${e.message}");
-      return e.response; // optional: return the error response
+      print('Unable to perform get request.');
+      print('DioError:$e');
     }
   }
 }

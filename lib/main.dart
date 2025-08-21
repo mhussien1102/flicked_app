@@ -3,11 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Pages
-import 'pages/splash_page.dart';
-import 'pages/main_page.dart';
+import './pages/splash_page.dart';
+import './pages/main_page.dart';
 
 void main() {
-  runApp(const ProviderScope(child: MyApp()));
+  // Boot with a lightweight splash that does DI once,
+  // then swaps to the real app.
+  runApp(
+    SplashPage(
+      key: UniqueKey(),
+      onInitializationComplete: () {
+        runApp(const ProviderScope(child: MyApp()));
+      },
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,17 +25,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flicked App',
       debugShowCheckedModeBanner: false,
+      title: 'Flickd',
+      // ✅ Go straight to your Home (no Splash in routes to avoid re-running setup)
+      home: MainPage(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const SplashPage(), // no callback, so const is OK
-        'home': (context) => MainPage(),
-      },
     );
   }
 }

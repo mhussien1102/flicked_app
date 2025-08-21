@@ -1,43 +1,45 @@
+//Packages
 import 'package:get_it/get_it.dart';
 
-import 'app_config.dart';
+//Models
+import '../models/app_config.dart';
 
 class Movie {
-  final String name;
-  final String language;
-  final bool isAdult;
-  final String description;
-  final String posterPath;
-  final num rating;
-  final String releaseDate;
-  final String backdropPath;
+  final String? name;
+  final String? language;
+  final bool? isAdult;
+  final String? description;
+  final String? posterPath;
+  final String? backdropPath;
+  final num? rating;
+  final String? releaseDate;
 
   Movie({
-    required this.name,
-    required this.language,
-    required this.isAdult,
-    required this.description,
-    required this.posterPath,
-    required this.rating,
-    required this.releaseDate,
-    required this.backdropPath,
+    this.name,
+    this.language,
+    this.isAdult,
+    this.description,
+    this.posterPath,
+    this.backdropPath,
+    this.rating,
+    this.releaseDate,
   });
 
-  factory Movie.fromJson(Map<String, dynamic> json) {
+  factory Movie.fromJson(Map<String, dynamic> _json) {
     return Movie(
-      name: json['title'],
-      language: json['original_language'],
-      isAdult: json['adult'],
-      description: json['description'],
-      posterPath: json['poster_path'],
-      backdropPath: json['backdrop_path'],
-      rating: json['vote_average'],
-      releaseDate: json['release_date'],
+      name: _json['title'],
+      language: _json['original_language'],
+      isAdult: _json['adult'],
+      description: _json['overview'],
+      posterPath: _json['poster_path'],
+      backdropPath: _json['backdrop_path'],
+      rating: _json['vote_average'],
+      releaseDate: _json['release_date'],
     );
   }
 
-  String posterUrl() {
-    final AppConfig aooConfig = GetIt.instance.get<AppConfig>();
-    return '${aooConfig.BASE_IMAGE_API_URL}${this.posterPath}';
+  String posterURL() {
+    final AppConfig _appConfig = GetIt.instance.get<AppConfig>();
+    return '${_appConfig.BASE_IMAGE_API_URL}${this.posterPath}';
   }
 }
